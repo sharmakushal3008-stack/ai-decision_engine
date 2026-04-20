@@ -32,10 +32,17 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 // Connect to Database and Start Server
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+if (process.env.NODE_ENV !== 'production') {
+  connectDB().then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  }).catch(err => {
+    console.error('Failed to connect to DB, server not started:', err);
   });
-}).catch(err => {
-  console.error('Failed to connect to DB, server not started:', err);
-});
+} else {
+  // For production (Vercel), we just export the app
+  connectDB();
+}
+
+module.exports = app;

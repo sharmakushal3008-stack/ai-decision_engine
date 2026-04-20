@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-darkBg text-white;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-glassBg backdrop-blur-md border border-glassBorder shadow-xl rounded-2xl;
+  }
+  
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg bg-neonBlue/20 text-neonBlue border border-neonBlue/50 hover:bg-neonBlue/40 hover:scale-105 transition-all duration-300;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 rounded-lg bg-neonPurple/20 text-neonPurple border border-neonPurple/50 hover:bg-neonPurple/40 hover:scale-105 transition-all duration-300;
+  }
+}
+
+@media print {
+  aside {
+    display: none !important;
+  }
+  body, .bg-darkBg {
+    background: white !important;
+    color: black !important;
+  }
+  .glass-panel, .Card {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    color: black !important;
+  }
+  h1, h2, h3, h4, span, div, p {
+    color: black !important;
+  }
+}

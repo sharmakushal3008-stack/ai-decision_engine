@@ -5,11 +5,11 @@ const connectDB = async () => {
   try {
     let uri = process.env.MONGO_URI;
 
-    // Fallback to in-memory server if standard localhost is provided but not running, mapping to memory
-    if (!uri || uri.includes('127.0.0.1')) {
+    // Use in-memory server ONLY if no MONGO_URI is provided at all
+    if (!uri) {
       const mongoServer = await MongoMemoryServer.create();
       uri = mongoServer.getUri();
-      console.log('Spun up purely in-memory MongoDB Server for instant local development.');
+      console.log('Spun up purely in-memory MongoDB Server since no MONGO_URI was provided.');
     }
 
     const conn = await mongoose.connect(uri, {

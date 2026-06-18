@@ -54,7 +54,13 @@ Return ONLY a valid JSON object matching exactly this schema:
     "problemsToSolve": 100,
     "projectsToComplete": 4,
     "skillsToAchieve": 10
-  }
+  },
+  "skillRoadmap": [
+    {
+      "skill": "Skill/Topic name",
+      "resources": ["High-quality tutorial name, official documentation, or learning course"]
+    }
+  ]
 }
 
 RULES:

@@ -14,7 +14,7 @@ exports.generateRecommendation = async (req, res) => {
     // 1. Call AI Service directly with Profile
     const aiOutput = await generateDecision(profile);
 
-    // 2. Save directly to execution schema
+      // 2. Save directly to execution schema
     const newRecommendation = await Recommendation.create({
       userId: req.user.id,
       masterplanTimeline: aiOutput.masterplanTimeline,
@@ -24,6 +24,7 @@ exports.generateRecommendation = async (req, res) => {
       dailyPlan: aiOutput.dailyPlan,
       projects: aiOutput.projects,
       progressMetrics: aiOutput.progressMetrics,
+      skillRoadmap: aiOutput.skillRoadmap || [],
       checkedTasks: []
     });
 

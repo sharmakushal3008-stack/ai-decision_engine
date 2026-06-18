@@ -36,6 +36,10 @@ const recommendationSchema = new mongoose.Schema({
     skillsToAchieve: Number
   },
   checkedTasks: { type: [String], default: [] },
+  skillRoadmap: [{
+    skill: { type: String, required: true },
+    resources: [{ type: String }]
+  }],
   chatHistory: [{
     sender: { type: String, enum: ['user', 'ai'] },
     message: String,

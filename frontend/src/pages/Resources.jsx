@@ -20,7 +20,7 @@ const Resources = () => {
       if (res.data.success && res.data.data.length > 0) {
         const latest = res.data.data[0];
         let aggregated = [];
-        latest.skillRoadmap.forEach(skillObj => {
+        latest.skillRoadmap?.forEach(skillObj => {
           if (skillObj.resources && skillObj.resources.length > 0) {
             aggregated.push({ skill: skillObj.skill, items: skillObj.resources });
           }

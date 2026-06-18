@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 
 let isConnecting = null;
 
@@ -19,6 +18,7 @@ const connectDB = async () => {
       if (process.env.NODE_ENV === 'production') {
         throw new Error('MONGO_URI environment variable is missing. In-memory database is not supported in production serverless environments.');
       }
+      const { MongoMemoryServer } = require('mongodb-memory-server');
       const mongoServer = await MongoMemoryServer.create();
       uri = mongoServer.getUri();
       console.log('Spun up purely in-memory MongoDB Server since no MONGO_URI was provided.');

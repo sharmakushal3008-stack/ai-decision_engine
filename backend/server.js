@@ -14,6 +14,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Database Connection Middleware
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
@@ -31,7 +41,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to Database and Start Server
+// Connect to Database and Start Server (Local Development Only)
 if (process.env.NODE_ENV !== 'production') {
   connectDB().then(() => {
     app.listen(PORT, () => {
@@ -40,9 +50,6 @@ if (process.env.NODE_ENV !== 'production') {
   }).catch(err => {
     console.error('Failed to connect to DB, server not started:', err);
   });
-} else {
-  // For production (Vercel), we just export the app
-  connectDB();
 }
 
 module.exports = app;

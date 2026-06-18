@@ -1,8 +1,18 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
+let isConnecting = null;
+
 const connectDB = async () => {
-  try {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
+  if (isConnecting) {
+    return isConnecting;
+  }
+
+  isConnecting = (async () => {
     let uri = process.env.MONGO_URI;
 
     if (!uri) {
@@ -19,9 +29,16 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    return conn;
+  })();
+
+  try {
+    const conn = await isConnecting;
+    return conn;
   } catch (error) {
     console.error(`Error connecting to Database: ${error.message}`);
-    process.exit(1);
+    isConnecting = null; // Reset promise so we can retry on next request
+    throw error;
   }
 };
 
